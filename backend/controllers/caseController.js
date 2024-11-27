@@ -22,16 +22,15 @@ exports.searchCases = async (req, res) => {
       }
     }
 
-    // Handle caseType
+  
     if (caseType) {
-        const startIndex = queryParams.length + 1; // Adjust index
+        const startIndex = queryParams.length + 1; 
         whereConditions.push(`category_of_case LIKE $${startIndex}`);
         queryParams.push(`%${caseType}%`);
     }
 
-    // Handle dateRange
     if (dateRange && dateRange.length === 2) {
-        const startIndex = queryParams.length + 1; // Adjust index
+        const startIndex = queryParams.length + 1;
         whereConditions.push(`case_year BETWEEN $${startIndex} AND $${startIndex + 1}`);
         queryParams.push(parseInt(dateRange[0]), parseInt(dateRange[1]));
     }
@@ -49,7 +48,7 @@ exports.searchCases = async (req, res) => {
             }
             
         } else {
-            whereConditions.push(`outcome_in_favor_of = $${startIndex} OR outcome_in_favor_of = $${startIndex + 1}`);
+            whereConditions.push(`(outcome_in_favor_of = $${startIndex} OR outcome_in_favor_of = $${startIndex + 1})`);
             queryParams.push('Respondent', 'Against Respondent');
         }
     }
@@ -59,7 +58,8 @@ exports.searchCases = async (req, res) => {
     if (whereConditions.length > 0) {
       sql += " AND " + whereConditions.join(" AND ");
     }
-
+    console.log(sql);
+    console.log(queryParams);
 
     const { rows: results } = await pool.query(sql, queryParams);
 
