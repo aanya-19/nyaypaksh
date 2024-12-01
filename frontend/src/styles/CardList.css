@@ -97,10 +97,13 @@
     top: 10px;
     right: 10px;
     z-index: 1;
+    transition: all 0.2s;
   }
   
   .corner-box:hover {
-    background-color: #426d7f;
+    background-color: #d5e3e9;
+    width: 32px;
+    height: 32px;
   }
   
 .loading-icon {

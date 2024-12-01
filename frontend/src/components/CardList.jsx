@@ -26,15 +26,16 @@ function CardList(props) {
       const outcome_in_favor_of = card.outcome_in_favor_of;
       const number_of_evidences = card.number_of_evidences;
       const outcome_in_court = card.outcome_in_court;
+      const case_keywords = card.case_keywords;
 
       // Send the data to the backend API
       const response = await axios.post('http://localhost:5000/api/cases/generateSummary', {
         main_issue,
         outcome_in_favor_of,
         number_of_evidences,
-        outcome_in_court
+        outcome_in_court,
+        case_keywords
       });
-
    
       setSummary(response.data.summary);
 

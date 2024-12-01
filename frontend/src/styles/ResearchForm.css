@@ -23,6 +23,7 @@
     color: white;
     padding-left: 20px;
     align-items: center;
+    transition: border-bottom 0.3s ease;
 }
 .search-icon {
     margin-right: 15px;
@@ -56,7 +57,13 @@
   input[type="text"]::placeholder {
     color: #f4f4f4;
     opacity: 1; 
-    
+    transition: opacity 0.3s ease;
+  }
+  input[type="text"]:focus::placeholder {
+    opacity: 0; 
+  }
+  .search-container:focus-within {
+    border-bottom: 2px solid white;
   }
   .slider-container{
     display: flex;
@@ -126,6 +133,7 @@ input[type="range"]::-webkit-slider-thumb {
     font-weight: 300;
     color: white;
     padding-left: 20px;
+    font-size: 14px;
   }
   .sort-options label {
     color: white;     
