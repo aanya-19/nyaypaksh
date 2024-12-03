@@ -33,7 +33,15 @@
   .nav-links li {
     cursor: pointer;
   }
-  
+  .custom-link {
+    text-decoration: none; 
+    color: rgb(0, 0, 0); 
+
+  }
+  .custom-link:hover {
+    text-decoration: underline;
+    color: rgb(26, 26, 26); 
+  }
   .language-select  {
     padding: 6px;
     font-size: 0.7rem;

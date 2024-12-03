@@ -1,105 +1,50 @@
 import React, { useState } from "react";
+import PredictiveForm from "./PredictiveForm";
+import PredictiveOutcome from "./PredictiveOutcome";
+import HistoricalData from "./PredictiveHistorical";
+import DownloadReport from "./DownloadReport";
+import "../styles/Predicitve.css";
 
-function PredictForm() {
-  const [caseKeywords, setCaseKeywords] = useState("");
-  const [courtType, setCourtType] = useState("");
-  const [numEvidences, setNumEvidences] = useState("");
-  const [dataset, setDataset] = useState("tax");
+const Predictive = () => {
   const [predictions, setPredictions] = useState(null);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false); // Loading state for fetching predictions
+  const [error, setError] = useState(null); // Error state
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Function to handle predictions from PredictiveForm
+  const handlePredictions = (predictions) => {
+    setPredictions(predictions);
+    setLoading(false); // Set loading to false after predictions are set
+  };
 
-    const data = {
-      case_keywords: caseKeywords,
-      court_type: courtType,
-      number_of_evidences: numEvidences,
-      dataset: dataset,
-    };
-
-    try {
-      const response = await fetch("http://localhost:5001/api/predict", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-      if (response.ok) {
-        setPredictions(result);
-        setError(null);
-      } else {
-        setError(result.error);
-        setPredictions(null);
-      }
-    } catch (err) {
-      setError("An error occurred while fetching predictions.");
-      setPredictions(null);
-    }
+  const handleError = (error) => {
+    setError(error);
+    setLoading(false); 
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Case Keywords:</label>
-          <input
-            type="text"
-            value={caseKeywords}
-            onChange={(e) => setCaseKeywords(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Court Type:</label>
-          <input
-            type="text"
-            value={courtType}
-            onChange={(e) => setCourtType(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Number of Evidences:</label>
-          <select
-            value={numEvidences}
-            onChange={(e) => setNumEvidences(e.target.value)}
-            required
-          >
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-        <div>
-          <label>Dataset:</label>
-          <select
-            value={dataset}
-            onChange={(e) => setDataset(e.target.value)}
-            required
-          >
-            <option value="tax">Tax</option>
-            <option value="contract">Contract</option>
-            <option value="dispute">Dispute</option>
-            <option value="property">Property</option>
-            <option value="corporate">Corporate</option>
-          </select>
-        </div>
-        <button type="submit">Predict</button>
-      </form>
+    <div className="predictive-analytics">
+      <h1>Predictive & Precedent Analysis</h1>
+      <p className="subHead">Utilise advanced analytics to predict case outcomes based on historical data</p>
+      <PredictiveForm onPredict={handlePredictions} onError={handleError} />
 
-      {predictions && (
-        <div>
-          <h3>Predictions:</h3>
-          <pre>{JSON.stringify(predictions, null, 2)}</pre>
+      {loading && (
+        <div className="loading-container">
+          <div className="spinner"></div>
+          <p>Loading predictions...</p>
         </div>
       )}
 
-      {error && <div>{error}</div>}
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
+      {predictions && !loading && (
+        <>
+          <PredictiveOutcome predictions={predictions} />
+          <HistoricalData />
+          <DownloadReport />
+        </>
+      )}
     </div>
   );
-}
+};
 
-export default PredictForm;
+export default Predictive;

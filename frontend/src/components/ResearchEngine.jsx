@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Navbar from "./Navbar";
 import SearchForm from "./ResearchForm";
 import CardList from "./CardList";
 import  "../styles/Engine.css"
@@ -22,7 +21,6 @@ const Engine = () => {
   
     return (
       <div className="engine">
-        <Navbar />
         <h1>Commercial Legal Search Engine</h1>
         <SearchForm onSearch={handleSearch} />
         {cards.length > 0 && <CardList cards={cards} />}

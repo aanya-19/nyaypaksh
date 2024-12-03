@@ -75,6 +75,7 @@ const SearchForm = ({ onSearch }) => {
           </option>
           <option value="Contract">Contract</option>
           <option value="Corporate">Corporate</option>
+          <option value="Commercial">Commercial</option>
           <option value="Tax">Tax</option>
           <option value="Banking">Banking</option>
           <option value="Property">Property</option>

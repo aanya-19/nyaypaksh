@@ -22,7 +22,6 @@ for dataset in dataset_names:
 @predict_bp.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
-    print(data)
     case_keywords = data['case_keywords']
     court_type = data['court_type']
     number_of_evidences = data['number_of_evidences']  # Get number of evidences as a string
